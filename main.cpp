@@ -44,6 +44,8 @@ vector <float> wrog()
 
 int main()
 {
+    ofstream wy;
+    wy.open("character.txt");
     srand(time(NULL));
     vector <float> POSTAC;
     vector <float> WROG;
