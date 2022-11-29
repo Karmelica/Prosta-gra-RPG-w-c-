@@ -9,12 +9,44 @@ int r(int p, int k)
     return n;
 }
 
-bool los(int chance){
-    int szansa = r(1,chance);
-    if(){};
-
+int atak(int chance, vector POSTAC[])
+{
+    int szansa = r(1,100);
+    if(szansa<=chance)
+    {
+        return POSTAC[1]*POSTAC[3];
+    }
+    else
+    {
+        return POSTAC[1];
+    }
 }
 
+void walka()
+{
+    cout<<"     Walka!      \n";
+    do
+    {
+        cout<<"HP twoje: "<<POSTAC[0]<<" HP wroga: "<<WROG[0]<<endl;
+        WROG[0]-=atak(POSTAC[2],POSTAC);
+        cout<<"Uderzasz za "<<atak(POSTAC[2],POSTAC)<<" ";
+        if(WROG[0]<0)
+        {
+            cout<<"\n Wygrales ";
+            break;
+        }
+        POSTAC[0]-=WROG[1]*WROG[3];
+        cout<<"Wrog uderza za "<<WROG[1]*WROG[3]<<endl;
+        if(POSTAC[0]<0)
+        {
+            cout<<"\n Przegrales ";
+            break;
+        }
+    }
+    while(POSTAC[0]>0);
+
+
+}
 vector <float> staty()
 {
     int hp, atk, cR;
@@ -81,23 +113,6 @@ int main()
     getchar();
 
 
-
-    cout<<"     Walka!      \n";
-    do{
-        cout<<"HP twoje: "<<POSTAC[0]<<" HP wroga: "<<WROG[0]<<endl;
-        WROG[0]-=POSTAC[1]*POSTAC[3];
-        cout<<"Uderzasz za "<<POSTAC[1]*POSTAC[3]<<" ";
-        if(WROG[0]<0){
-            cout<<"\n Wygrales ";
-            break;
-        }
-        POSTAC[0]-=WROG[1]*WROG[3];
-        cout<<"Wrog uderza za "<<WROG[1]*WROG[3]<<endl;
-        if(POSTAC[0]<0){
-            cout<<"\n Przegrales ";
-            break;
-        }
-    }while(POSTAC[0]>0);
 
 
 
