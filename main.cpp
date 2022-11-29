@@ -49,7 +49,7 @@ int main()
     srand(time(NULL));
     vector <float> POSTAC;
     vector <float> WROG;
-    cout<<"Kliknij cokolwiek aby kontynuowac";
+    cout<<"Kliknij enter aby kontynuowac";
     getchar();
     cout<<"\n Postac | HP | ATK | CritRate | CritDMG |\n";
     cout<<" Twoja postac: ";
@@ -64,7 +64,8 @@ int main()
         WROG.push_back(wrog()[i]);
         cout<<WROG[i]<<" ";
     }
-    cout<<endl;
+    cout<<endl<<"\nKliknij enter aby kontynuowac";
+    getchar();
 //    wy.close();
     return 0;
 }
