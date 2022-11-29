@@ -38,7 +38,7 @@ float atak(float atk, float chance, float multi)
 //    return S;
 //}
 
-int walka(struct postac P, struct postac W)
+int walka(struct postac* P, struct postac* W)
 {
     cout<<"     Walka!      \n";
     do
