@@ -44,12 +44,13 @@ vector <float> wrog()
 
 int main()
 {
-    ofstream wy;
-    wy.open("character.txt");
+//    ofstream wy;
+//    wy.open("character.txt");
     srand(time(NULL));
     vector <float> POSTAC;
     vector <float> WROG;
-    cout<<"witaj";
+    cout<<"Kliknij cokolwiek aby kontynuowac";
+    getchar();
     cout<<"\n Postac | HP | ATK | CritRate | CritDMG |\n";
     cout<<" Twoja postac: ";
     for (int i=0; i<postac().size(); i++)
@@ -64,5 +65,6 @@ int main()
         cout<<WROG[i]<<" ";
     }
     cout<<endl;
+//    wy.close();
     return 0;
 }
