@@ -47,7 +47,7 @@ int main()
     srand(time(NULL));
     vector <float> POSTAC;
     vector <float> WROG;
-    cout<<"witaj"
+    cout<<"witaj";
     cout<<"\n Postac | HP | ATK | CritRate | CritDMG |\n";
     cout<<" Twoja postac: ";
     for (int i=0; i<postac().size(); i++)
