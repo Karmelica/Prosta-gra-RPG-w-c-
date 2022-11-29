@@ -7,8 +7,6 @@ float cDMG;
 int Whp, Watk, WcR;
 float WcDMG;
 
-//XD
-
 int r(int p, int k){
     int n;
     n = p + rand() % k;
