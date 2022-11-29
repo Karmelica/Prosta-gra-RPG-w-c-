@@ -9,44 +9,19 @@ int r(int p, int k)
     return n;
 }
 
-int atak(int chance, vector POSTAC[])
+int atak(int atk, int chance, int multi)
 {
     int szansa = r(1,100);
     if(szansa<=chance)
     {
-        return POSTAC[1]*POSTAC[3];
+        return atk*multi;
     }
     else
     {
-        return POSTAC[1];
+        return atk;
     }
 }
 
-void walka()
-{
-    cout<<"     Walka!      \n";
-    do
-    {
-        cout<<"HP twoje: "<<POSTAC[0]<<" HP wroga: "<<WROG[0]<<endl;
-        WROG[0]-=atak(POSTAC[2],POSTAC);
-        cout<<"Uderzasz za "<<atak(POSTAC[2],POSTAC)<<" ";
-        if(WROG[0]<0)
-        {
-            cout<<"\n Wygrales ";
-            break;
-        }
-        POSTAC[0]-=WROG[1]*WROG[3];
-        cout<<"Wrog uderza za "<<WROG[1]*WROG[3]<<endl;
-        if(POSTAC[0]<0)
-        {
-            cout<<"\n Przegrales ";
-            break;
-        }
-    }
-    while(POSTAC[0]>0);
-
-
-}
 vector <float> staty()
 {
     int hp, atk, cR;
@@ -63,27 +38,13 @@ vector <float> staty()
     return STATY;
 }
 
-//vector <float> wrog()
-//{
-//    vector <float> WROG;
-//    Whp = r(200, 800);
-//    Watk = r(50, 100);
-//    WcR = r(1, 40);
-//    WcDMG = r(101, 49);
-//    WROG.push_back(Whp);
-//    WROG.push_back(Watk);
-//    WROG.push_back(WcR);
-//    WROG.push_back(WcDMG/100);
-//    return WROG;
-//}
-
 int main()
 {
 //    ofstream wy;
 //    wy.open("character.txt");
     srand(time(NULL));
-    vector <float> POSTAC;
-    vector <float> WROG;
+    vector <float> P;
+    vector <float> W;
 
 
 
@@ -92,19 +53,18 @@ int main()
 
 
 
-
     cout<<"\n Postac | HP | ATK | CritRate | CritDMG |\n";
-    cout<<" Twoja postac: ";
+    cout<<" Twoja Postac: ";
     for (int i=0; i<staty().size(); i++)
     {
-        POSTAC.push_back(staty()[i]);
-        cout<<POSTAC[i]<<" ";
+        P.push_back(staty()[i]);
+        cout<<P[i]<<" ";
     }
     cout<<"\n Wrog: ";
     for (int i=0; i<staty().size(); i++)
     {
-        WROG.push_back(staty()[i]);
-        cout<<WROG[i]<<" ";
+        W.push_back(staty()[i]);
+        cout<<W[i]<<" ";
     }
 
 
@@ -113,6 +73,27 @@ int main()
     getchar();
 
 
+
+    cout<<"     Walka!      \n";
+    do
+    {
+        cout<<"\nHP twoje: "<<P[0]<<", HP Wroga: "<<W[0]<<endl;
+        W[0]-=atak(P[1],P[2],P[3]);
+        cout<<"Uderzasz za "<<atak(P[1],P[2],P[3])<<" ";
+        if(W[0]<0)
+        {
+            cout<<"\n Wygrales ";
+            break;
+        }
+        P[0]-=atak(W[1],W[2],W[3]);
+        cout<<"Wrog uderza za "<<atak(W[1],W[2],W[3])<<endl;
+        if(P[0]<0)
+        {
+            cout<<"\n Przegrales ";
+            break;
+        }
+    }
+    while(P[0]>0);
 
 
 
