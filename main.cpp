@@ -9,10 +9,10 @@ int r(int p, int k)
     return n;
 }
 
-int atak(int atk, int chance, int multi)
+float atak(int atk, int chance, int multi)
 {
     int szansa = r(1,100);
-    if(szansa<=chance)
+    if(chance>=szansa)
     {
         return atk*multi;
     }
@@ -27,8 +27,8 @@ vector <float> staty()
     int hp, atk, cR;
     float cDMG;
     vector <float> STATY;
-    hp = r(300, 200);
-    atk = r(25, 15);
+    hp = r(3000, 2000);
+    atk = r(250, 150);
     cR = r(1, 40);
     cDMG = r(101, 49);
     STATY.push_back(hp);
@@ -78,15 +78,15 @@ int main()
     do
     {
         cout<<"\nHP twoje: "<<P[0]<<", HP Wroga: "<<W[0]<<endl;
-        W[0]-=atak(P[1],P[2],P[3]);
         cout<<"Uderzasz za "<<atak(P[1],P[2],P[3])<<" ";
+        W[0]-=atak(P[1],P[2],P[3]);
         if(W[0]<0)
         {
             cout<<"\n Wygrales ";
             break;
         }
-        P[0]-=atak(W[1],W[2],W[3]);
         cout<<"Wrog uderza za "<<atak(W[1],W[2],W[3])<<endl;
+        P[0]-=atak(W[1],W[2],W[3]);
         if(P[0]<0)
         {
             cout<<"\n Przegrales ";
@@ -94,11 +94,6 @@ int main()
         }
     }
     while(P[0]>0);
-
-
-
-    cout<<endl<<"\nKliknij enter aby kontynuowac";
-    getchar();
 
 
 
