@@ -45,31 +45,22 @@ vector <float> wrog()
 int main()
 {
     srand(time(NULL));
-    cout<<" Witaj, wybierz opcje:\n1. Graj\n2. Wyjdz\n";
-    int wybor;
-    do
+    vector <float> POSTAC;
+    vector <float> WROG;
+    cout<<"witaj"
+    cout<<"\n Postac | HP | ATK | CritRate | CritDMG |\n";
+    cout<<" Twoja postac: ";
+    for (int i=0; i<postac().size(); i++)
     {
-        cin>>wybor;
+        POSTAC.push_back(postac()[i]);
+        cout<<POSTAC[i]<<" ";
     }
-    while(wybor!=1 && wybor!=2);
-    switch(wybor)
+    cout<<"\n Wrog: ";
+    for (int i=0; i<wrog().size(); i++)
     {
-    case 1:
-        cout<<" Postac | HP | ATK | CritRate | CritDMG |\n";
-        cout<<" Twoja postac: ";
-        for (int i=0; i<postac().size(); i++)
-        {
-            cout<<postac()[i]<<" ";
-        }
-        cout<<"\n Wrog: ";
-        for (int i=0; i<wrog().size(); i++)
-        {
-            cout<<wrog()[i]<<" ";
-        }
-        break;
-    case 2:
-        cout<<"Pa Pa";
-        break;
+        WROG.push_back(wrog()[i]);
+        cout<<WROG[i]<<" ";
     }
+    cout<<endl;
     return 0;
 }
