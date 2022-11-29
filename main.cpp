@@ -66,6 +66,23 @@ int main()
     }
     cout<<endl<<"\nKliknij enter aby kontynuowac";
     getchar();
+
+    cout<<"     Walka!\n";
+    do{
+        cout<<"HP twoje: "<<POSTAC[0]<<" HP wroga: "<<WROG[0]<<endl;
+        WROG[0]-=POSTAC[1];
+        if(WROG[0]<0){
+            cout<<"\n Wygrales ";
+            break;
+        }
+        POSTAC[0]-=WROG[1];
+        if(POSTAC[0]<0){
+            cout<<"\n Przegrales ";
+            break;
+        }
+    }while(POSTAC[0]>0);
+    cout<<endl<<"\nKliknij enter aby kontynuowac";
+    getchar();
 //    wy.close();
     return 0;
 }
