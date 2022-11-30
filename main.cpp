@@ -2,6 +2,14 @@
 
 using namespace std;
 
+struct postac
+{
+    float hp;
+    float atk;
+    float cR;
+    float cDMG;
+};
+
 int r(int p, int k)
 {
     int n;
@@ -38,9 +46,9 @@ float atak(float atk, float chance, float multi)
 //    return S;
 //}
 
-int walka(struct postac* P, struct postac* W)
+int walka(struct postac P, struct postac W)
 {
-    cout<<"     Walka!      \n";
+    cout<<"\n     Walka!      \n";
     do
     {
         cout<<"\nHP twoje: "<<P.hp<<", HP Wroga: "<<W.hp<<endl;
@@ -59,30 +67,22 @@ int walka(struct postac* P, struct postac* W)
             break;
         }
     }
-    while(P[0]>0);
-
-
+    while(P.hp>0);
 
     cout<<endl<<"\n Kliknij enter aby kontynuowac";
     getchar();
 }
 
-struct postac
-{
-    float hp;
-    float atk;
-    float cR;
-    float cDMG;
-};
-
-void pokaz(struct postac A)
-{
-    cout<<A.hp<<" ";
-    cout<<A.atk<<" ";
-    cout<<A.cR<<" ";
-    cout<<A.cDMG<<" ";
+void lvlUP(struct postac* P){
 }
 
+void pokaz(struct postac* A)
+{
+    cout<<A->hp<<" ";
+    cout<<A->atk<<" ";
+    cout<<A->cR<<" ";
+    cout<<A->cDMG<<" ";
+}
 
 int main()
 {
@@ -94,51 +94,45 @@ int main()
 
     cout<<"\n Kliknij enter aby kontynuowac";
     getchar();
-
-    int lvl = 200;
+    int lvl = 1;
+do{
     postac Gracz =
     {
-        r(300, 200)+(0.5*lvl),
-        r(25, 15)+(0.5*lvl),
-        r(1, 40)+(0.3*lvl),
-        (r(101, 49)+(0.6*lvl))/100,
+        r(300, 200)+(0.5*(lvl-1)),
+        r(25, 15)+(0.5*(lvl-1)),
+        r(1, 40)+(0.3*(lvl-1)),
+        (r(101, 49)+(0.6*(lvl-1)))/100,
     };
 
     postac Wrog =
     {
-        r(300, 200)+(0.5*lvl),
-        r(25, 15)+(0.5*lvl),
-        r(1, 40)+(0.3*lvl),
-        (r(101, 49)+(0.6*lvl))/100,
+        r(300, 200)+(0.5*(lvl-1)),
+        r(25, 15)+(0.5*(lvl-1)),
+        r(1, 40)+(0.3*(lvl-1)),
+        (r(101, 49)+(0.6*(lvl-1)))/100,
     };
 
     cout<<"\n Postac | HP | ATK | CritRate | CritDMG |";
     cout<<"\n Twoja Postac: ";
-    pokaz(Gracz);
+    pokaz(&Gracz);
     cout<<"\n Wrog: ";
-    pokaz(Wrog);
-//    for (int i=0; i<stat(lvl).size(); i++)
-//    {
-//        P.push_back(stat(lvl)[i]);
-//        cout<<P[i]<<" | ";
-//    }
-//    for (int i=0; i<stat(lvl).size(); i++)
-//    {
-//        W.push_back(stat(lvl)[i]);
-//        cout<<W[i]<<" | ";
-//    }
+    pokaz(&Wrog);
+    cout<<endl;
 
     cout<<"\n Kliknij enter aby kontynuowac";
     getchar();
 
     if(walka(Gracz, Wrog)==1)
     {
-        cout<<"\n Wygrales";
+        cout<<"\n     Wygrales     \n";
+        lvl++;
     }
     else
     {
-        cout<<"\n Przegrales";
+        cout<<"\n     Przegrales     \n";
+        break;
     }
+}while(lvl<201);
 //    wy.close();
     return 0;
 }
