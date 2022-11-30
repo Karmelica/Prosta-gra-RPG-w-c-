@@ -73,7 +73,8 @@ int walka(struct postac P, struct postac W)
     getchar();
 }
 
-void lvlUP(struct postac* P){
+void lvlUP(struct postac* P)
+{
 }
 
 void pokaz(struct postac* A)
@@ -89,50 +90,56 @@ int main()
 //    ofstream wy;
 //    wy.open("character.txt");
     srand(time(NULL));
-    vector <float> P;
-    vector <float> W;
 
     cout<<"\n Kliknij enter aby kontynuowac";
     getchar();
     int lvl = 1;
-do{
-    postac Gracz =
+    char wybor;
+    do
     {
-        r(300, 200)+(0.5*(lvl-1)),
-        r(25, 15)+(0.5*(lvl-1)),
-        r(1, 40)+(0.3*(lvl-1)),
-        (r(101, 49)+(0.6*(lvl-1)))/100,
-    };
+        do
+        {
+            postac Gracz =
+            {
+                r(300, 200)+(0.5*(lvl-1)),
+                r(25, 15)+(0.5*(lvl-1)),
+                r(1, 40)+(0.3*(lvl-1)),
+                (r(101, 49)+(0.6*(lvl-1)))/100,
+            };
 
-    postac Wrog =
-    {
-        r(300, 200)+(0.5*(lvl-1)),
-        r(25, 15)+(0.5*(lvl-1)),
-        r(1, 40)+(0.3*(lvl-1)),
-        (r(101, 49)+(0.6*(lvl-1)))/100,
-    };
+            postac Wrog =
+            {
+                r(300, 200)+(0.5*(lvl-1)),
+                r(25, 15)+(0.5*(lvl-1)),
+                r(1, 40)+(0.3*(lvl-1)),
+                (r(101, 49)+(0.6*(lvl-1)))/100,
+            };
 
-    cout<<"\n Postac | HP | ATK | CritRate | CritDMG |";
-    cout<<"\n Twoja Postac: ";
-    pokaz(&Gracz);
-    cout<<"\n Wrog: ";
-    pokaz(&Wrog);
-    cout<<endl;
+            cout<<"\n     LVL: "<<lvl;
+            cout<<"\n Postac | HP | ATK | CritRate | CritDMG |";
+            cout<<"\n Twoja Postac: ";
+            pokaz(&Gracz);
+            cout<<"\n Wrog: ";
+            pokaz(&Wrog);
+            cout<<endl;
 
-    cout<<"\n Kliknij enter aby kontynuowac";
-    getchar();
+            cout<<"\n Kliknij enter aby kontynuowac";
+            getchar();
 
-    if(walka(Gracz, Wrog)==1)
-    {
-        cout<<"\n     Wygrales     \n";
-        lvl++;
-    }
-    else
-    {
-        cout<<"\n     Przegrales     \n";
-        break;
-    }
-}while(lvl<201);
+            if(walka(Gracz, Wrog)==1)
+            {
+                cout<<"\n     Wygrales\n     LVL UP\n";
+                lvl++;
+            }
+            else
+            {
+                cout<<"\n     Przegrales\n     Gramy dalej? y/n\n";
+                cin>>wybor;
+                lvl=1;
+                break;
+            }
+        }while(lvl<201);
+    }while(wybor=='y');
 //    wy.close();
     return 0;
 }
