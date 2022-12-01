@@ -57,8 +57,19 @@ int walka(struct postac P, struct postac W)
     getchar();
 }
 
+void resetP(struct postac* P){
+        P->hp = r(300, 200)+(0.5);
+        P->atk = r(25, 15)+(0.5);
+        P->cR = r(1, 40)+(0.3);
+        P->cDMG = (r(101, 49)+(0.6))/100;
+}
+
 void lvlUP(struct postac* P)
 {
+    P->hp += 0.5;
+    P->atk += 0.5;
+    P->cR += 0.3;
+    P->cDMG += 0.006;
 }
 
 void pokaz(struct postac* A)
@@ -78,6 +89,7 @@ int main()
     cout<<"\n Kliknij enter aby kontynuowac";
     getchar();
     int lvl = 1;
+    int rekord = 0;
     char wybor;
 
     postac Gracz =
@@ -89,8 +101,10 @@ int main()
     };
     do
     {
+        resetP(&Gracz);
         do
         {
+            lvlUP(&Gracz);
             postac Wrog =
             {
                 r(300, 200)+(0.5*(lvl-1)),
@@ -107,8 +121,8 @@ int main()
             pokaz(&Wrog);
             cout<<endl;
 
-            cout<<"\n Kliknij enter aby kontynuowac";
-            getchar();
+//            cout<<"\n Kliknij enter aby kontynuowac";
+//            getchar();
 
             if(walka(Gracz, Wrog)==1)
             {
@@ -123,13 +137,17 @@ int main()
                     cin>>wybor;
                 }
                 while(wybor!='y' && wybor!='n');
+                if(rekord<lvl){
+                    rekord=lvl;
+                }
                 lvl=1;
                 break;
             }
         }
-        while(lvl<201);
+        while(lvl<200);
     }
     while(wybor=='y');
+    cout<<"\nNajwyzszy poziom to: "<<rekord;
 //    wy.close();
     return 0;
 }
