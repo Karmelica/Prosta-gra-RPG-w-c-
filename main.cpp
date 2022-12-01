@@ -96,7 +96,7 @@ void lvlUP(struct postac* P, int l)
     }
 
     cout<<"\n Kliknij enter aby kontynuowac";
-    cin.ignore;
+    getchar();
 }
 
 void pokaz(struct postac* A)
