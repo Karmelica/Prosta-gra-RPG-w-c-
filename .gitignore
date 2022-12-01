@@ -16,3 +16,6 @@ bin/Debug/libstdc++-6.dll
 bin/Debug/libwinpthread-1.dll
 Giercxa.depend
 obj/Debug/main.o
+obj/Debug/main.o
+Giercxa.depend
+bin/Debug/Giercxa.exe
