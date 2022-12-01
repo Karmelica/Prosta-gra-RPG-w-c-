@@ -134,7 +134,9 @@ int main()
             else
             {
                 cout<<"\n     Przegrales\n     Gramy dalej? y/n\n";
-                cin>>wybor;
+                do{
+                    cin>>wybor;
+                }while(wybor!='y' && wybor!='n');
                 lvl=1;
                 break;
             }
