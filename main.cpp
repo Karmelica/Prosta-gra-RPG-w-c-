@@ -3,6 +3,19 @@
 
 using namespace std;
 
+HANDLE color=GetStdHandle(STD_OUTPUT_HANDLE);
+//SetConsoleTextAttribute(color, #);
+//1 Blue                10 Light Green
+//2 Green               11 Light Aqua
+//3 Aqua                12 Light Red
+//4 Red                 13 Light Purple
+//5 Purple              14 Light Yellow
+//6 Yellow              15 Bright White
+//7 White
+//8 Gray
+//9 Light Blue
+//0 Black
+
 struct postac
 {
     double hp;
@@ -38,14 +51,22 @@ int walka(struct postac P, struct postac W)
     do
     {
         Atak = atak(P.atk, P.cR, P.cDMG);
-        cout<<"\n HP twoje: "<<P.hp<<", HP Wroga: "<<W.hp<<endl;
+        cout<<"\n HP twoje: ";
+        SetConsoleTextAttribute(color, 2); cout<<P.hp; SetConsoleTextAttribute(color, 7);
+        cout<<", HP wroga: ";
+        SetConsoleTextAttribute(color, 2); cout<<W.hp; SetConsoleTextAttribute(color, 7);
+        cout<<endl;
         if(Atak>P.atk)
         {
-            cout<<"Uderzasz KRYTYCZNIE za "<<Atak<<", ";
+            cout<<"Uderzasz ";
+            SetConsoleTextAttribute(color, 6); cout<<"KRYTYCZNIE"; SetConsoleTextAttribute(color, 7);
+            cout<<" za ";
+            SetConsoleTextAttribute(color, 4); cout<<Atak; SetConsoleTextAttribute(color, 7);
         }
         else
         {
-            cout<<"Uderzasz za "<<Atak<<", ";
+            cout<<"Uderzasz za ";
+            SetConsoleTextAttribute(color, 12); cout<<Atak; SetConsoleTextAttribute(color, 7);
         }
         W.hp-=Atak;
         if(W.hp<=0)
@@ -56,11 +77,17 @@ int walka(struct postac P, struct postac W)
         Atak = atak(W.atk, W.cR, W.cDMG);
         if(Atak>W.atk)
         {
-            cout<<"Wrog uderza KRYTYCZNIE za "<<Atak<<endl;
+            cout<<", Wrog uderza ";
+            SetConsoleTextAttribute(color, 6); cout<<"KRYTYCZNIE"; SetConsoleTextAttribute(color, 7);
+            cout<<" za ";
+            SetConsoleTextAttribute(color, 4); cout<<Atak; SetConsoleTextAttribute(color, 7);
+            cout<<"\n";
         }
         else
         {
-            cout<<"Wrog uderza za "<<Atak<<endl;
+            cout<<", Wrog uderza za ";
+            SetConsoleTextAttribute(color, 12); cout<<Atak; SetConsoleTextAttribute(color, 7);
+            cout<<"\n";
         }
         P.hp-=Atak;
         if(P.hp<=0)
@@ -70,9 +97,6 @@ int walka(struct postac P, struct postac W)
         }
     }
     while(P.hp>0);
-
-    cout<<endl<<"\n Kliknij enter aby kontynuowac";
-    getchar();
 }
 
 void resetP(struct postac* P)
@@ -145,6 +169,7 @@ void pokaz(struct postac* A)
 
 int main()
 {
+
     srand(time(NULL));
 
     double a = 1;
