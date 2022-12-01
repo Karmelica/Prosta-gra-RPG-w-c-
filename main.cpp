@@ -83,38 +83,55 @@ void resetP(struct postac* P)
     P->cDMG = r(101, 49);
 }
 
-void lvlUP(struct postac* P, struct postac W, int l)
+void lvlUP(struct postac* P, struct postac W, int l, int w)
 {
-    cout<<"\nLVL UP";
-    cout<<"\n Co chcesz ulepszyc?\n 1.HP ++\n 2.ATK ++\n 3.critRATE ++\n 4.critDMG ++\n 5.Sugestia AI\n";
-    int w;
-    do
+    if(w==0)
+    {
+        cout<<"\nLVL UP";
+        cout<<"\n Co chcesz ulepszyc?\n 1.HP ++\n 2.ATK ++\n 3.critRATE ++\n 4.critDMG ++\n 5.Sugestia AI\n";
+    }
+    while(w<1 || w>5)
     {
         cin>>w;
     }
-    while(w<1 || w>5);
     if(w==1)
     {
-        P->hp += l*0.5;
-        cout<<"\n HP ("<<(P->hp)-(l*0.5)<<" -> "<<P->hp<<")\n";
+        P->hp += l*5;
+        cout<<"\n HP ("<<(P->hp)-(l*5)<<" -> "<<P->hp<<")\n";
     }
     else if(w==2)
     {
-        P->atk += l*0.5;
-        cout<<"\n ATK ("<<(P->atk)-(l*0.5)<<" -> "<<P->atk<<")\n";
+        P->atk += l*3;
+        cout<<"\n ATK ("<<(P->atk)-(l*3)<<" -> "<<P->atk<<")\n";
     }
     else if(w==3)
     {
-        P->cR += l*0.3;
-        cout<<"\n critRate ("<<(P->cR)-(l*0.3)<<")% -> ("<<P->cR<<")%\n";
+        P->cR += l*1;
+        cout<<"\n critRate ("<<(P->cR)-(l*1)<<")% -> ("<<P->cR<<")%\n";
     }
     else if(w==4)
     {
         P->cDMG += l*0.6;
         cout<<"\n critDMG +("<<(((P->cDMG)/100)-1)*100-l*0.6<<")%ATK -> +("<<(((P->cDMG)/100)-1)*100<<")%ATK\n";
     }
-    else{
-
+    else
+    {
+        if(P->hp<W.hp)
+        {
+            lvlUP(P,W,l,1);
+        }
+        else if(P->atk<W.atk)
+        {
+            lvlUP(P,W,l,2);
+        }
+        else if(P->cR<W.cR)
+        {
+            lvlUP(P,W,l,3);
+        }
+        else
+        {
+            lvlUP(P,W,l,4);
+        }
     }
 }
 
@@ -130,10 +147,9 @@ int main()
 {
     srand(time(NULL));
 
-    cout<<"\n Kliknij enter aby kontynuowac";
-    getchar();
-
+    double a = 1;
     int lvl = 1;
+    int aut = 0;
     int rekord = 0;
     char wybor;
 
@@ -146,13 +162,41 @@ int main()
     };
     do
     {
+        cout<<" Wybierz poziom trudnosci:\n 1.Super Latwy\n 2.Latwy\n 3.Normalny\n 4.Niemozliwy ";
+        int t;
+        cin>>t;
+        switch(t)
+        {
+        case 1:
+            a=0.5;
+            break;
+        case 2:
+            a=0.75;
+
+            break;
+        case 3:
+            a=1;
+
+            break;
+        case 4:
+            a=1.5;
+            break;
+        }
+        cout<<" Tryb auto? y/n ";
+        char wy;
+        do{
+            cin>>wy;
+        }while(wy!='y' && wy!='n');
+        if (wy=='y'){
+            aut = 5;
+        }
         do
         {
             postac Wrog =
             {
-                r(300, 200)+(0.5*(lvl-1)),
-                r(25, 15)+(0.5*(lvl-1)),
-                r(1, 40)+(0.3*(lvl-1)),
+                r(300*a, 200*a)+(2*(lvl-1)),
+                r(25*a, 15*a)+(1*(lvl-1)),
+                r(1, 40)+(0.5*(lvl-1)),
                 r(101, 49)+(0.6*(lvl-1)),
             };
 
@@ -165,27 +209,31 @@ int main()
 
             if(walka(Gracz,Wrog)==1)
             {
-                cout<<"\n     Wygrales\n     Next Level\n";
+                cout<<"\n     Wygrales\n\n     Next Level\n";
                 if(lvl%2==0)
                 {
-                    lvlUP(&Gracz,Wrog,2);
+                    lvlUP(&Gracz,Wrog,2,aut);
                     if(lvl%5==0)
                     {
-                        lvlUP(&Gracz,Wrog,5);
+                        lvlUP(&Gracz,Wrog,5,aut);
                     }
                 }
                 else if(lvl%5==0)
                 {
-                    lvlUP(&Gracz,Wrog,5);
+                    lvlUP(&Gracz,Wrog,5,aut);
                 }
                 lvl++;
             }
             else
             {
-                cout<<"\n     Przegrales\n     Gramy dalej? y/n\n";
+                cout<<"\n     Przegrales na poziomie "<<lvl<<"\n     Gramy dalej? y/n\n";
                 do
                 {
                     cin>>wybor;
+                    if(wybor!='y' && wybor!='n')
+                    {
+                        cout<<" WYBIERZ y LUB n! ";
+                    }
                 }
                 while(wybor!='y' && wybor!='n');
                 if(rekord<lvl)
@@ -203,3 +251,6 @@ int main()
     cout<<"\n Najwyzszy poziom to: "<<rekord;
     return 0;
 }
+
+//cout<<"\nKliknij enter aby kontynuowac ";
+//getchar();
