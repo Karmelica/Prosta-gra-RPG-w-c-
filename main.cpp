@@ -65,9 +65,9 @@ void resetP(struct postac* P)
     P->cDMG = (r(101, 49)+(0.6))/100;
 }
 
-void lvlUP(struct postac* P)
+void lvlUP(struct postac* P, int l)
 {
-    cout<<"\nCo chcesz ulepszyc?\n1.HP + 1\n2.ATK + 1\n3.critRATE + 6%\n4.critDMG + 0,12%\n";
+    cout<<"\nCo chcesz ulepszyc?\n1.HP ++\n2.ATK ++\n3.critRATE ++\n4.critDMG ++\n";
     int w;
     do
     {
@@ -76,20 +76,27 @@ void lvlUP(struct postac* P)
     while(w<1 || w>4);
     if(w==1)
     {
-        P->hp += 1;
+        P->hp += l*0.5;
+        cout<<"\nHP "<<(P->hp)-(l*0.5)<<" -> "<<P->hp<<endl;
     }
     else if(w==2)
     {
-        P->atk += 1;
+        P->atk += l*0.5;
+        cout<<"\nATK "<<(P->atk)-(l*0.5)<<" -> "<<P->atk<<endl;
     }
     else if(w==3)
     {
-        P->cR += 0.3;
+        P->cR += l*0.3;
+        cout<<"\ncritRate "<<(P->cR)-(l*0.5)<<" -> "<<P->cR<<endl;
     }
     else
     {
-        P->cDMG += 0.006;
+        P->cDMG += l*0.006;
+        cout<<"\ncritDMG "<<(P->cDMG)-(l*0.5)<<" -> "<<P->cDMG<<endl;
     }
+
+    cout<<"\n Kliknij enter aby kontynuowac";
+    cin.ignore;
 }
 
 void pokaz(struct postac* A)
@@ -126,10 +133,11 @@ int main()
         {
             if(lvl%2==0)
             {
-                if(lvl%5==0 && lvl%2!=0){
-                    lvlUP(&Gracz);
+                if(lvl%5==0)
+                {
+                    lvlUP(&Gracz,5);
                 }
-                lvlUP(&Gracz);
+                lvlUP(&Gracz,2);
             }
             postac Wrog =
             {
@@ -147,8 +155,6 @@ int main()
             pokaz(&Wrog);
             cout<<endl;
 
-//            cout<<"\n Kliknij enter aby kontynuowac";
-//            getchar();
 
             if(walka(Gracz, Wrog)==1)
             {
