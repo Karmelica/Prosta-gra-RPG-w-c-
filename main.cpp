@@ -30,22 +30,6 @@ float atak(float atk, float chance, float multi)
     }
 }
 
-//vector <float> stat(int lvl)
-//{
-//    int hp, atk, cR;
-//    float cDMG;
-//    vector <float> S;
-//    hp = r(300, 200);
-//    atk = r(25, 15);
-//    cR = r(1, 40);
-//    cDMG = r(101, 49);
-//    S.push_back(hp+(0.5*lvl));
-//    S.push_back(atk+(0.5*lvl));
-//    S.push_back(cR+(0.3*lvl));
-//    S.push_back(cDMG/100+(0.6*lvl));
-//    return S;
-//}
-
 int walka(struct postac P, struct postac W)
 {
     cout<<"\n     Walka!      \n";
@@ -95,18 +79,18 @@ int main()
     getchar();
     int lvl = 1;
     char wybor;
+
+    postac Gracz =
+    {
+        r(300, 200)+(0.5),
+        r(25, 15)+(0.5),
+        r(1, 40)+(0.3),
+        (r(101, 49)+(0.6))/100,
+    };
     do
     {
         do
         {
-            postac Gracz =
-            {
-                r(300, 200)+(0.5*(lvl-1)),
-                r(25, 15)+(0.5*(lvl-1)),
-                r(1, 40)+(0.3*(lvl-1)),
-                (r(101, 49)+(0.6*(lvl-1)))/100,
-            };
-
             postac Wrog =
             {
                 r(300, 200)+(0.5*(lvl-1)),
@@ -134,14 +118,18 @@ int main()
             else
             {
                 cout<<"\n     Przegrales\n     Gramy dalej? y/n\n";
-                do{
+                do
+                {
                     cin>>wybor;
-                }while(wybor!='y' && wybor!='n');
+                }
+                while(wybor!='y' && wybor!='n');
                 lvl=1;
                 break;
             }
-        }while(lvl<201);
-    }while(wybor=='y');
+        }
+        while(lvl<201);
+    }
+    while(wybor=='y');
 //    wy.close();
     return 0;
 }
