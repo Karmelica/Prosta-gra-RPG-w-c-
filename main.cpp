@@ -4,10 +4,10 @@ using namespace std;
 
 struct postac
 {
-    float hp;
-    float atk;
-    float cR;
-    float cDMG;
+    double hp;
+    double atk;
+    double cR;
+    double cDMG;
 };
 
 int r(int p, int k)
@@ -17,7 +17,7 @@ int r(int p, int k)
     return n;
 }
 
-float atak(float atk, float chance, float multi)
+double atak(double atk, double chance, double multi)
 {
     int szansa = r(1,100);
     if(chance>=szansa)
@@ -35,8 +35,8 @@ int walka(struct postac P, struct postac W)
     cout<<"\n     Walka!      \n";
     do
     {
-        cout<<"\nHP twoje: "<<P.hp<<", HP Wroga: "<<W.hp<<endl;
-        cout<<"Uderzasz za "<<atak(P.atk,P.cR,P.cDMG)<<" ";
+        cout<<"\n HP twoje: "<<P.hp<<", HP Wroga: "<<W.hp<<endl;
+        cout<<" Uderzasz za "<<atak(P.atk,P.cR,P.cDMG)<<" ";
         W.hp-=atak(P.atk,P.cR,P.cDMG);
         if(W.hp<0)
         {
@@ -67,7 +67,7 @@ void resetP(struct postac* P)
 
 void lvlUP(struct postac* P, int l)
 {
-    cout<<"\nCo chcesz ulepszyc?\n1.HP ++\n2.ATK ++\n3.critRATE ++\n4.critDMG ++\n";
+    cout<<"\n Co chcesz ulepszyc?\n 1.HP ++\n 2.ATK ++\n 3.critRATE ++\n 4.critDMG ++\n";
     int w;
     do
     {
@@ -77,22 +77,22 @@ void lvlUP(struct postac* P, int l)
     if(w==1)
     {
         P->hp += l*0.5;
-        cout<<"\nHP "<<(P->hp)-(l*0.5)<<" -> "<<P->hp<<endl;
+        cout<<"\n HP "<<(P->hp)-(l*0.5)<<" -> "<<P->hp<<endl;
     }
     else if(w==2)
     {
         P->atk += l*0.5;
-        cout<<"\nATK "<<(P->atk)-(l*0.5)<<" -> "<<P->atk<<endl;
+        cout<<"\n ATK "<<(P->atk)-(l*0.5)<<" -> "<<P->atk<<endl;
     }
     else if(w==3)
     {
         P->cR += l*0.3;
-        cout<<"\ncritRate "<<(P->cR)-(l*0.5)<<" -> "<<P->cR<<endl;
+        cout<<"\n critRate "<<(P->cR)-(l*0.5)<<" -> "<<P->cR<<endl;
     }
     else
     {
         P->cDMG += l*0.006;
-        cout<<"\ncritDMG "<<(P->cDMG)-(l*0.5)<<" -> "<<P->cDMG<<endl;
+        cout<<"\n critDMG "<<(P->cDMG)-(l*0.5)<<" -> "<<P->cDMG<<endl;
     }
 
     cout<<"\n Kliknij enter aby kontynuowac";
@@ -131,14 +131,6 @@ int main()
         resetP(&Gracz);
         do
         {
-            if(lvl%2==0)
-            {
-                if(lvl%5==0)
-                {
-                    lvlUP(&Gracz,5);
-                }
-                lvlUP(&Gracz,2);
-            }
             postac Wrog =
             {
                 r(300, 200)+(0.5*(lvl-1)),
@@ -160,6 +152,14 @@ int main()
             {
                 cout<<"\n     Wygrales\n     LVL UP\n";
                 lvl++;
+                if(lvl%2==0)
+                {
+                    if(lvl%5==0)
+                    {
+                        lvlUP(&Gracz,5);
+                    }
+                    lvlUP(&Gracz,2);
+                }
             }
             else
             {
@@ -180,7 +180,7 @@ int main()
         while(lvl<200);
     }
     while(wybor=='y');
-    cout<<"\nNajwyzszy poziom to: "<<rekord;
+    cout<<"\n Najwyzszy poziom to: "<<rekord;
 //    wy.close();
     return 0;
 }
