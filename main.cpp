@@ -24,7 +24,6 @@ double atak(double atk, double chance, double multi)
     if(chance>=szansa)
     {
         return atk*(multi/100);
-        cout<<" Trafienie krytyczne!!!\n";
     }
     else
     {
@@ -35,19 +34,36 @@ double atak(double atk, double chance, double multi)
 int walka(struct postac P, struct postac W)
 {
     cout<<"     Walka!      \n";
+    int Atak;
     do
     {
+        Atak = atak(P.atk, P.cR, P.cDMG);
         cout<<"\n HP twoje: "<<P.hp<<", HP Wroga: "<<W.hp<<endl;
-        cout<<" Uderzasz za "<<atak(P.atk,P.cR,P.cDMG)<<" ";
-        W.hp-=atak(P.atk,P.cR,P.cDMG);
-        if(W.hp<0)
+        if(Atak>P.atk)
+        {
+            cout<<"Uderzasz KRYTYCZNIE za "<<Atak<<", ";
+        }
+        else
+        {
+            cout<<"Uderzasz za "<<Atak<<", ";
+        }
+        W.hp-=Atak;
+        if(W.hp<=0)
         {
             return 1;
             break;
         }
-        cout<<"Wrog uderza za "<<atak(W.atk,W.cR,W.cDMG)<<endl;
-        P.hp-=atak(W.atk,W.cR,W.cDMG);
-        if(P.hp<0)
+        Atak = atak(W.atk, W.cR, W.cDMG);
+        if(Atak>W.atk)
+        {
+            cout<<"Wrog uderza KRYTYCZNIE za "<<Atak<<endl;
+        }
+        else
+        {
+            cout<<"Wrog uderza za "<<Atak<<endl;
+        }
+        P.hp-=Atak;
+        if(P.hp<=0)
         {
             return 0;
             break;
@@ -67,35 +83,38 @@ void resetP(struct postac* P)
     P->cDMG = r(101, 49);
 }
 
-void lvlUP(struct postac* P, int l)
+void lvlUP(struct postac* P, struct postac W, int l)
 {
-    l==2 ? cout<<"\nLVL UP" : cout<<"\nLVL UP x2";
-    cout<<"\n Co chcesz ulepszyc?\n 1.HP ++\n 2.ATK ++\n 3.critRATE ++\n 4.critDMG ++\n";
-    int w = r(1,4);
-//    do
-//    {
-//        cin>>w;
-//    }
-    while(w<1 || w>4);
+    cout<<"\nLVL UP";
+    cout<<"\n Co chcesz ulepszyc?\n 1.HP ++\n 2.ATK ++\n 3.critRATE ++\n 4.critDMG ++\n 5.Sugestia AI\n";
+    int w;
+    do
+    {
+        cin>>w;
+    }
+    while(w<1 || w>5);
     if(w==1)
     {
         P->hp += l*0.5;
-        cout<<"\n HP "<<(P->hp)-(l*0.5)<<" -> "<<P->hp<<endl;
+        cout<<"\n HP ("<<(P->hp)-(l*0.5)<<" -> "<<P->hp<<")\n";
     }
     else if(w==2)
     {
         P->atk += l*0.5;
-        cout<<"\n ATK "<<(P->atk)-(l*0.5)<<" -> "<<P->atk<<endl;
+        cout<<"\n ATK ("<<(P->atk)-(l*0.5)<<" -> "<<P->atk<<")\n";
     }
     else if(w==3)
     {
         P->cR += l*0.3;
-        cout<<"\n critRate "<<(P->cR)-(l*0.3)<<" -> "<<P->cR<<endl;
+        cout<<"\n critRate ("<<(P->cR)-(l*0.3)<<")% -> ("<<P->cR<<")%\n";
     }
-    else
+    else if(w==4)
     {
-        P->cDMG += l*0.06;
-        cout<<"\n critDMG "<<(P->cDMG)-(l*0.6)<<" -> "<<P->cDMG<<endl;
+        P->cDMG += l*0.6;
+        cout<<"\n critDMG +("<<(((P->cDMG)/100)-1)*100-l*0.6<<")%ATK -> +("<<(((P->cDMG)/100)-1)*100<<")%ATK\n";
+    }
+    else{
+
     }
 }
 
@@ -104,7 +123,7 @@ void pokaz(struct postac* A)
     cout<<"\n  HP("<<A->hp<<")\n";
     cout<<"  ATK("<<A->atk<<")\n";
     cout<<"  CritRate("<<A->cR<<")%\n";
-    cout<<"  CritDMG+("<<((A->cDMG)/10)-1<<")%ATK\n";
+    cout<<"  CritDMG+("<<(((A->cDMG)/100)-1)*100<<")%ATK\n";
 }
 
 int main()
@@ -134,7 +153,7 @@ int main()
                 r(300, 200)+(0.5*(lvl-1)),
                 r(25, 15)+(0.5*(lvl-1)),
                 r(1, 40)+(0.3*(lvl-1)),
-                r(101, 49)+(0.06*(lvl-1)),
+                r(101, 49)+(0.6*(lvl-1)),
             };
 
             cout<<"\n     LVL: "<<lvl;
@@ -144,16 +163,20 @@ int main()
             pokaz(&Wrog);
             cout<<endl;
 
-            if(walka(Gracz, Wrog)==1)
+            if(walka(Gracz,Wrog)==1)
             {
                 cout<<"\n     Wygrales\n     Next Level\n";
                 if(lvl%2==0)
                 {
-                    lvlUP(&Gracz,2);
+                    lvlUP(&Gracz,Wrog,2);
                     if(lvl%5==0)
                     {
-                        lvlUP(&Gracz,5);
+                        lvlUP(&Gracz,Wrog,5);
                     }
+                }
+                else if(lvl%5==0)
+                {
+                    lvlUP(&Gracz,Wrog,5);
                 }
                 lvl++;
             }
