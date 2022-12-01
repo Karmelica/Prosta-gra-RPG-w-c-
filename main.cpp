@@ -109,8 +109,6 @@ void pokaz(struct postac* A)
 
 int main()
 {
-//    ofstream wy;
-//    wy.open("character.txt");
     srand(time(NULL));
 
     cout<<"\n Kliknij enter aby kontynuowac";
@@ -181,6 +179,5 @@ int main()
     }
     while(wybor=='y');
     cout<<"\n Najwyzszy poziom to: "<<rekord;
-//    wy.close();
     return 0;
 }
