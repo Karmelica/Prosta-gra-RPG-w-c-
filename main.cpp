@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <windows.h>
 
 using namespace std;
 
@@ -68,6 +69,7 @@ void resetP(struct postac* P)
 
 void lvlUP(struct postac* P, int l)
 {
+    l==2 ? cout<<"\nLVL UP" : cout<<"\nLVL UP x2";
     cout<<"\n Co chcesz ulepszyc?\n 1.HP ++\n 2.ATK ++\n 3.critRATE ++\n 4.critDMG ++\n";
     int w = r(1,4);
 //    do
@@ -142,19 +144,18 @@ int main()
             pokaz(&Wrog);
             cout<<endl;
 
-
             if(walka(Gracz, Wrog)==1)
             {
-                cout<<"\n     Wygrales\n     LVL UP\n";
-                lvl++;
+                cout<<"\n     Wygrales\n     Next Level\n";
                 if(lvl%2==0)
                 {
+                    lvlUP(&Gracz,2);
                     if(lvl%5==0)
                     {
                         lvlUP(&Gracz,5);
                     }
-                    lvlUP(&Gracz,2);
                 }
+                lvl++;
             }
             else
             {
