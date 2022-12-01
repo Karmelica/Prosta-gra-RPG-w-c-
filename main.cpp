@@ -57,19 +57,39 @@ int walka(struct postac P, struct postac W)
     getchar();
 }
 
-void resetP(struct postac* P){
-        P->hp = r(300, 200)+(0.5);
-        P->atk = r(25, 15)+(0.5);
-        P->cR = r(1, 40)+(0.3);
-        P->cDMG = (r(101, 49)+(0.6))/100;
+void resetP(struct postac* P)
+{
+    P->hp = r(300, 200)+(0.5);
+    P->atk = r(25, 15)+(0.5);
+    P->cR = r(1, 40)+(0.3);
+    P->cDMG = (r(101, 49)+(0.6))/100;
 }
 
 void lvlUP(struct postac* P)
 {
-    P->hp += 0.5;
-    P->atk += 0.5;
-    P->cR += 0.3;
-    P->cDMG += 0.006;
+    cout<<"\nCo chcesz ulepszyc?\n1.HP + 1\n2.ATK + 1\n3.critRATE + 6%\n4.critDMG + 0,12%\n";
+    int w;
+    do
+    {
+        cin>>w;
+    }
+    while(w<1 || w>4);
+    if(w==1)
+    {
+        P->hp += 1;
+    }
+    else if(w==2)
+    {
+        P->atk += 1;
+    }
+    else if(w==3)
+    {
+        P->cR += 0.3;
+    }
+    else
+    {
+        P->cDMG += 0.006;
+    }
 }
 
 void pokaz(struct postac* A)
@@ -104,7 +124,13 @@ int main()
         resetP(&Gracz);
         do
         {
-            lvlUP(&Gracz);
+            if(lvl%2==0)
+            {
+                if(lvl%5==0 && lvl%2!=0){
+                    lvlUP(&Gracz);
+                }
+                lvlUP(&Gracz);
+            }
             postac Wrog =
             {
                 r(300, 200)+(0.5*(lvl-1)),
@@ -137,7 +163,8 @@ int main()
                     cin>>wybor;
                 }
                 while(wybor!='y' && wybor!='n');
-                if(rekord<lvl){
+                if(rekord<lvl)
+                {
                     rekord=lvl;
                 }
                 lvl=1;
