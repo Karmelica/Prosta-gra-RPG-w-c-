@@ -22,7 +22,8 @@ double atak(double atk, double chance, double multi)
     int szansa = r(1,100);
     if(chance>=szansa)
     {
-        return atk*multi;
+        return atk*(multi/100);
+        cout<<" Trafienie krytyczne!!!\n";
     }
     else
     {
@@ -32,7 +33,7 @@ double atak(double atk, double chance, double multi)
 
 int walka(struct postac P, struct postac W)
 {
-    cout<<"\n     Walka!      \n";
+    cout<<"     Walka!      \n";
     do
     {
         cout<<"\n HP twoje: "<<P.hp<<", HP Wroga: "<<W.hp<<endl;
@@ -59,20 +60,20 @@ int walka(struct postac P, struct postac W)
 
 void resetP(struct postac* P)
 {
-    P->hp = r(300, 200)+(0.5);
-    P->atk = r(25, 15)+(0.5);
-    P->cR = r(1, 40)+(0.3);
-    P->cDMG = (r(101, 49)+(0.6))/100;
+    P->hp = r(300, 200);
+    P->atk = r(25, 15);
+    P->cR = r(1, 40);
+    P->cDMG = r(101, 49);
 }
 
 void lvlUP(struct postac* P, int l)
 {
     cout<<"\n Co chcesz ulepszyc?\n 1.HP ++\n 2.ATK ++\n 3.critRATE ++\n 4.critDMG ++\n";
-    int w;
-    do
-    {
-        cin>>w;
-    }
+    int w = r(1,4);
+//    do
+//    {
+//        cin>>w;
+//    }
     while(w<1 || w>4);
     if(w==1)
     {
@@ -87,24 +88,21 @@ void lvlUP(struct postac* P, int l)
     else if(w==3)
     {
         P->cR += l*0.3;
-        cout<<"\n critRate "<<(P->cR)-(l*0.5)<<" -> "<<P->cR<<endl;
+        cout<<"\n critRate "<<(P->cR)-(l*0.3)<<" -> "<<P->cR<<endl;
     }
     else
     {
-        P->cDMG += l*0.006;
-        cout<<"\n critDMG "<<(P->cDMG)-(l*0.5)<<" -> "<<P->cDMG<<endl;
+        P->cDMG += l*0.06;
+        cout<<"\n critDMG "<<(P->cDMG)-(l*0.6)<<" -> "<<P->cDMG<<endl;
     }
-
-    cout<<"\n Kliknij enter aby kontynuowac";
-    getchar();
 }
 
 void pokaz(struct postac* A)
 {
-    cout<<A->hp<<" ";
-    cout<<A->atk<<" ";
-    cout<<A->cR<<" ";
-    cout<<A->cDMG<<" ";
+    cout<<"\n  HP("<<A->hp<<")\n";
+    cout<<"  ATK("<<A->atk<<")\n";
+    cout<<"  CritRate("<<A->cR<<")%\n";
+    cout<<"  CritDMG+("<<((A->cDMG)/10)-1<<")%ATK\n";
 }
 
 int main()
@@ -113,20 +111,20 @@ int main()
 
     cout<<"\n Kliknij enter aby kontynuowac";
     getchar();
+
     int lvl = 1;
     int rekord = 0;
     char wybor;
 
     postac Gracz =
     {
-        r(300, 200)+(0.5),
-        r(25, 15)+(0.5),
-        r(1, 40)+(0.3),
-        (r(101, 49)+(0.6))/100,
+        r(300, 200),
+        r(25, 15),
+        r(1, 40),
+        r(101, 49),
     };
     do
     {
-        resetP(&Gracz);
         do
         {
             postac Wrog =
@@ -134,11 +132,10 @@ int main()
                 r(300, 200)+(0.5*(lvl-1)),
                 r(25, 15)+(0.5*(lvl-1)),
                 r(1, 40)+(0.3*(lvl-1)),
-                (r(101, 49)+(0.6*(lvl-1)))/100,
+                r(101, 49)+(0.06*(lvl-1)),
             };
 
             cout<<"\n     LVL: "<<lvl;
-            cout<<"\n Postac | HP | ATK | CritRate | CritDMG |";
             cout<<"\n Twoja Postac: ";
             pokaz(&Gracz);
             cout<<"\n Wrog: ";
@@ -176,6 +173,7 @@ int main()
             }
         }
         while(lvl<200);
+        resetP(&Gracz);
     }
     while(wybor=='y');
     cout<<"\n Najwyzszy poziom to: "<<rekord;
