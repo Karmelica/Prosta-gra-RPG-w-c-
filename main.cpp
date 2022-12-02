@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include <windows.h>
+#include <conio.h>
 
 using namespace std;
 
@@ -116,7 +117,9 @@ void lvlUP(struct postac* P, struct postac W, int l, int w)
     }
     while(w<1 || w>5)
     {
-        cin>>w;
+        w = getch();
+        w-='0';
+        cout<<w;
     }
     if(w==1)
     {
@@ -189,7 +192,11 @@ int main()
     {
         cout<<" Wybierz poziom trudnosci:\n 1.Super Latwy\n 2.Latwy\n 3.Normalny\n 4.Niemozliwy ";
         int t;
-        cin>>t;
+        do{
+            t = getch();
+            t-='0';
+            cout<<t;
+        }while(t>4 || t<1);
         switch(t)
         {
         case 1:
@@ -210,7 +217,8 @@ int main()
         cout<<" Tryb auto? y/n ";
         char wy;
         do{
-            cin>>wy;
+            wy = getch();
+            cout<<wy;
         }while(wy!='y' && wy!='n');
         if (wy=='y'){
             aut = 5;
@@ -247,6 +255,8 @@ int main()
                 {
                     lvlUP(&Gracz,Wrog,5,aut);
                 }
+                    cout<<"\nKliknij cokolwiek aby kontynuowac\n";
+                    getch();
                 lvl++;
             }
             else
@@ -254,11 +264,12 @@ int main()
                 cout<<"\n     Przegrales na poziomie "<<lvl<<"\n     Gramy dalej? y/n\n";
                 do
                 {
-                    cin>>wybor;
+                    wybor = getch();
                     if(wybor!='y' && wybor!='n')
                     {
                         cout<<" WYBIERZ y LUB n! ";
                     }
+                    cout<<wybor;
                 }
                 while(wybor!='y' && wybor!='n');
                 if(rekord<lvl)
@@ -277,5 +288,5 @@ int main()
     return 0;
 }
 
-//cout<<"\nKliknij enter aby kontynuowac ";
-//getchar();
+/*cout<<"\nKliknij enter aby kontynuowac ";
+getch();*/
