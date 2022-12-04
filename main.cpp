@@ -17,6 +17,14 @@ HANDLE color=GetStdHandle(STD_OUTPUT_HANDLE);
 //9 Light Blue
 //0 Black
 
+struct item
+{
+    double hp;
+    double atk;
+    double cR;
+    double cDMG;
+};
+
 struct postac
 {
     double hp;
@@ -24,6 +32,10 @@ struct postac
     double cR;
     double cDMG;
 };
+//
+//void item(struct item* A){
+//    map <int, struct> amogus;
+//}
 
 int r(int p, int k)
 {
@@ -167,7 +179,7 @@ void pokaz(struct postac* A)
     cout<<"\n  HP("<<A->hp<<")\n";
     cout<<"  ATK("<<A->atk<<")\n";
     cout<<"  CritRate("<<A->cR<<")%\n";
-    cout<<"  CritDMG+("<<(((A->cDMG)/100)-1)*100<<")%ATK\n";
+    cout<<"  CritDMG +("<<(((A->cDMG)/100)-1)*100<<")%ATK\n";
 }
 
 int main()
@@ -288,5 +300,5 @@ int main()
     return 0;
 }
 
-/*cout<<"\nKliknij enter aby kontynuowac ";
+/*cout<<"\nKliknij cokolwiek aby kontynuowac\n";
 getch();*/
