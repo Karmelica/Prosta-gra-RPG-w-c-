@@ -17,8 +17,10 @@ HANDLE color=GetStdHandle(STD_OUTPUT_HANDLE);
 //9 Light Blue
 //0 Black
 
-struct item
+struct itemy
 {
+    int nr;
+    string nazwa;
     double hp;
     double atk;
     double cR;
@@ -32,10 +34,6 @@ struct postac
     double cR;
     double cDMG;
 };
-//
-//void item(struct item* A){
-//    map <int, struct> amogus;
-//}
 
 int r(int p, int k)
 {
@@ -64,24 +62,28 @@ int walka(struct postac P, struct postac W)
     do
     {
         Atak = atak(P.atk, P.cR, P.cDMG);
-        cout<<"\n HP twoje: ";
-        SetConsoleTextAttribute(color, 2); cout<<P.hp; SetConsoleTextAttribute(color, 7);
-        cout<<", HP wroga: ";
-        SetConsoleTextAttribute(color, 2); cout<<W.hp; SetConsoleTextAttribute(color, 7);
         cout<<endl;
         if(Atak>P.atk)
         {
-            cout<<"Uderzasz ";
-            SetConsoleTextAttribute(color, 6); cout<<"KRYTYCZNIE"; SetConsoleTextAttribute(color, 7);
+            cout<<" Uderzasz ";
+            SetConsoleTextAttribute(color, 6);
+            cout<<"KRYTYCZNIE";
+            SetConsoleTextAttribute(color, 7);
             cout<<" za ";
-            SetConsoleTextAttribute(color, 4); cout<<Atak; SetConsoleTextAttribute(color, 7);
+            SetConsoleTextAttribute(color, 4);
+            cout<<Atak;
+            SetConsoleTextAttribute(color, 7);
         }
         else
         {
-            cout<<"Uderzasz za ";
-            SetConsoleTextAttribute(color, 12); cout<<Atak; SetConsoleTextAttribute(color, 7);
+            cout<<" Uderzasz za ";
+            SetConsoleTextAttribute(color, 12);
+            cout<<Atak;
+            SetConsoleTextAttribute(color, 7);
         }
         W.hp-=Atak;
+        cout<<"\n HP wroga: ";
+        SetConsoleTextAttribute(color, 2); cout<<W.hp; SetConsoleTextAttribute(color, 7);
         if(W.hp<=0)
         {
             return 1;
@@ -90,24 +92,33 @@ int walka(struct postac P, struct postac W)
         Atak = atak(W.atk, W.cR, W.cDMG);
         if(Atak>W.atk)
         {
-            cout<<", Wrog uderza ";
-            SetConsoleTextAttribute(color, 6); cout<<"KRYTYCZNIE"; SetConsoleTextAttribute(color, 7);
+            cout<<"\n Wrog uderza ";
+            SetConsoleTextAttribute(color, 6);
+            cout<<"KRYTYCZNIE";
+            SetConsoleTextAttribute(color, 7);
             cout<<" za ";
-            SetConsoleTextAttribute(color, 4); cout<<Atak; SetConsoleTextAttribute(color, 7);
-            cout<<"\n";
+            SetConsoleTextAttribute(color, 4);
+            cout<<Atak;
+            SetConsoleTextAttribute(color, 7);
+            cout<<" ";
         }
         else
         {
-            cout<<", Wrog uderza za ";
-            SetConsoleTextAttribute(color, 12); cout<<Atak; SetConsoleTextAttribute(color, 7);
-            cout<<"\n";
+            cout<<"\n Wrog uderza za ";
+            SetConsoleTextAttribute(color, 12);
+            cout<<Atak;
+            SetConsoleTextAttribute(color, 7);
+            cout<<" ";
         }
         P.hp-=Atak;
+        cout<<"\n HP twoje: ";
+        SetConsoleTextAttribute(color, 2); cout<<P.hp; SetConsoleTextAttribute(color, 7);
         if(P.hp<=0)
         {
             return 0;
             break;
         }
+        cout<<endl;
     }
     while(P.hp>0);
 }
@@ -174,6 +185,31 @@ void lvlUP(struct postac* P, struct postac W, int l, int w)
     }
 }
 
+void itemek(vector <itemy> A, struct postac* P, int n = r(1,5))
+{
+    cout<<"\n Wylosowales item: "<<A[n].nazwa;
+    if (A[n].hp>0)
+    {
+        P->hp+=A[n].hp;
+        cout<<"\n HP ("<<(P->hp)-(A[n].hp)<<" -> "<<P->hp<<")\n";
+    }
+    if (A[n].atk>0)
+    {
+        P->atk+=A[n].atk;
+        cout<<"\n ATK ("<<(P->atk)-(A[n].atk)<<" -> "<<P->atk<<")\n";
+    }
+    if (A[n].cR>0)
+    {
+        P->cR+=A[n].cR;
+        cout<<"\n critRate ("<<(P->cR)-(A[n].cR)<<")% -> ("<<P->cR<<")%\n";
+    }
+    if (A[n].cDMG>0)
+    {
+        P->cDMG+=A[n].cDMG;
+        cout<<"\n critDMG +("<<(((P->cDMG)/100)-1)*100-(A[n].cDMG)<<")%ATK -> +("<<(((P->cDMG)/100)-1)*100<<")%ATK\n";
+    }
+}
+
 void pokaz(struct postac* A)
 {
     cout<<"\n  HP("<<A->hp<<")\n";
@@ -182,9 +218,30 @@ void pokaz(struct postac* A)
     cout<<"  CritDMG +("<<(((A->cDMG)/100)-1)*100<<")%ATK\n";
 }
 
+void pokazI(vector <itemy> A, int n)
+{
+    cout<<" "<<A[n].nazwa<<" ";
+    if (A[n].hp>0)
+    {
+        cout<<" HP+"<<A[n].hp<<" ";
+    }
+    if (A[n].atk>0)
+    {
+        cout<<" ATK+"<<A[n].atk<<" ";
+    }
+    if (A[n].cR>0)
+    {
+        cout<<" critRate+"<<A[n].cR<<" ";
+    }
+    if (A[n].cDMG>0)
+    {
+        cout<<" critDMG+"<<A[n].cDMG<<" ";
+    }
+    cout<<endl;
+}
+
 int main()
 {
-
     srand(time(NULL));
 
     double a = 1;
@@ -200,15 +257,28 @@ int main()
         r(1, 40),
         r(101, 49),
     };
+
+    vector <itemy> nrI =
+    {
+        {0},
+        {1, "helm", 0, 0, 0, 8},
+        {2, "galoty", 25, 15, 2, 4},
+        {3, "buty", 0, 0, 4, 0},
+        {4, "sztylet", 0, 30, 0, 0},
+        {5, "jablko", 50, 0, 0, 0},
+    };
+
     do
     {
         cout<<" Wybierz poziom trudnosci:\n 1.Super Latwy\n 2.Latwy\n 3.Normalny\n 4.Niemozliwy ";
         int t;
-        do{
+        do
+        {
             t = getch();
             t-='0';
             cout<<t;
-        }while(t>4 || t<1);
+        }
+        while(t>4 || t<1);
         switch(t)
         {
         case 1:
@@ -228,11 +298,14 @@ int main()
         }
         cout<<" Tryb auto? y/n ";
         char wy;
-        do{
+        do
+        {
             wy = getch();
             cout<<wy;
-        }while(wy!='y' && wy!='n');
-        if (wy=='y'){
+        }
+        while(wy!='y' && wy!='n');
+        if (wy=='y')
+        {
             aut = 5;
         }
         do
@@ -258,32 +331,32 @@ int main()
                 if(lvl%2==0)
                 {
                     lvlUP(&Gracz,Wrog,2,aut);
-                    if(lvl%5==0)
-                    {
-                        lvlUP(&Gracz,Wrog,5,aut);
-                    }
                 }
-                else if(lvl%5==0)
+                if(lvl%5==0)
                 {
                     lvlUP(&Gracz,Wrog,5,aut);
                 }
-                    cout<<"\nKliknij cokolwiek aby kontynuowac\n";
-                    getch();
+                if(lvl%10==0){
+                    itemek(nrI, &Gracz);
+                }
+
+//                cout<<"\n Kliknij cokolwiek aby kontynuowac\n";
+//                getch();
                 lvl++;
             }
             else
             {
-                cout<<"\n     Przegrales na poziomie "<<lvl<<"\n     Gramy dalej? y/n\n";
+                cout<<"\n     Przegrales na poziomie "<<lvl<<"\n     Gramy dalej? t/n\n";
                 do
                 {
                     wybor = getch();
-                    if(wybor!='y' && wybor!='n')
+                    if(wybor!='t' && wybor!='n')
                     {
-                        cout<<" WYBIERZ y LUB n! ";
+                        cout<<" WYBIERZ t LUB n! ";
                     }
                     cout<<wybor;
                 }
-                while(wybor!='y' && wybor!='n');
+                while(wybor!='t' && wybor!='n');
                 if(rekord<lvl)
                 {
                     rekord=lvl;
@@ -295,8 +368,15 @@ int main()
         while(lvl<200);
         resetP(&Gracz);
     }
-    while(wybor=='y');
-    cout<<"\n Najwyzszy poziom to: "<<rekord;
+    while(wybor=='t');
+    if (lvl==200)
+    {
+        cout<<" !!WYGRALES!! ";
+    }
+    else
+    {
+        cout<<"\n Najwyzszy poziom to: "<<rekord;
+    }
     return 0;
 }
 
