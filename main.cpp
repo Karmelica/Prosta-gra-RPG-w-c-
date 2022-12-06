@@ -60,7 +60,7 @@ double atak(double atk, double chance, double multi, double re)
 int walka(struct postac P, struct postac W)
 {
     cout<<"     Walka!      \n";
-    int Atak;
+    int Atak(0);
     do
     {
         Atak = atak(P.atk, P.cR, P.cDMG, W.r);
@@ -68,20 +68,14 @@ int walka(struct postac P, struct postac W)
         if(Atak>P.atk)
         {
             cout<<" Uderzasz ";
-            SetConsoleTextAttribute(color, 6);
-            cout<<"KRYTYCZNIE";
-            SetConsoleTextAttribute(color, 7);
+            SetConsoleTextAttribute(color, 6); cout<<"KRYTYCZNIE"; SetConsoleTextAttribute(color, 7);
             cout<<" za ";
-            SetConsoleTextAttribute(color, 4);
-            cout<<Atak;
-            SetConsoleTextAttribute(color, 7);
+            SetConsoleTextAttribute(color, 4); cout<<Atak; SetConsoleTextAttribute(color, 7);
         }
         else
         {
             cout<<" Uderzasz za ";
-            SetConsoleTextAttribute(color, 12);
-            cout<<Atak;
-            SetConsoleTextAttribute(color, 7);
+            SetConsoleTextAttribute(color, 12); cout<<Atak; SetConsoleTextAttribute(color, 7);
         }
         W.hp-=Atak;
         cout<<"\n HP wroga: ";
@@ -95,21 +89,15 @@ int walka(struct postac P, struct postac W)
         if(Atak>W.atk)
         {
             cout<<"\n Wrog uderza ";
-            SetConsoleTextAttribute(color, 6);
-            cout<<"KRYTYCZNIE";
-            SetConsoleTextAttribute(color, 7);
+            SetConsoleTextAttribute(color, 6); cout<<"KRYTYCZNIE"; SetConsoleTextAttribute(color, 7);
             cout<<" za ";
-            SetConsoleTextAttribute(color, 4);
-            cout<<Atak;
-            SetConsoleTextAttribute(color, 7);
+            SetConsoleTextAttribute(color, 4); cout<<Atak; SetConsoleTextAttribute(color, 7);
             cout<<" ";
         }
         else
         {
             cout<<"\n Wrog uderza za ";
-            SetConsoleTextAttribute(color, 12);
-            cout<<Atak;
-            SetConsoleTextAttribute(color, 7);
+            SetConsoleTextAttribute(color, 12); cout<<Atak; SetConsoleTextAttribute(color, 7);
             cout<<" ";
         }
         P.hp-=Atak;
@@ -188,7 +176,7 @@ void lvlUP(struct postac* P, struct postac W, int l, int w)
     }
 }
 
-void itemek(vector <itemy> A, struct postac* P, int n = r(0,5))
+void itemek(vector <itemy> A, struct postac* P, int n = r(1,6))
 {
     cout<<"\n Wylosowales item: "<<A[n].nazwa;
     if (A[n].hp>0)
@@ -210,6 +198,11 @@ void itemek(vector <itemy> A, struct postac* P, int n = r(0,5))
     {
         P->cDMG+=A[n].cDMG;
         cout<<"\n critDMG +("<<(((P->cDMG)/100)-1)*100-(A[n].cDMG)<<")%ATK -> +("<<(((P->cDMG)/100)-1)*100<<")%ATK\n";
+    }
+    if (A[n].r>0)
+    {
+        P->r+=A[n].r;
+        cout<<"\n Resist ("<<(P->r)-(A[n].r)<<" -> "<<P->r<<")\n";
     }
 }
 
@@ -265,12 +258,13 @@ int main()
 
     vector <itemy> nrI =
     {
-        {0, "nic", 0, 0, 0, 0},
+        {0, "nic"},
         {1, "helm", 0, 0, 0, 8},
         {2, "galoty", 25, 15, 2, 4},
-        {3, "buty", 0, 0, 4, 0},
-        {4, "sztylet", 0, 30, 0, 0},
-        {5, "jablko", 50, 0, 0, 0},
+        {3, "buty", 0, 0, 4},
+        {4, "sztylet", 0, 30},
+        {5, "jablko", 50},
+        {6, "drutex", 0, 0, 0, 0, 10},
     };
 
     do
