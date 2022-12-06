@@ -25,6 +25,7 @@ struct itemy
     double atk;
     double cR;
     double cDMG;
+    double r;
 };
 
 struct postac
@@ -33,6 +34,7 @@ struct postac
     double atk;
     double cR;
     double cDMG;
+    double r;
 };
 
 int r(int p, int k)
@@ -42,16 +44,16 @@ int r(int p, int k)
     return n;
 }
 
-double atak(double atk, double chance, double multi)
+double atak(double atk, double chance, double multi, double r)
 {
     int szansa = r(1,100);
     if(chance>=szansa)
     {
-        return atk*(multi/100);
+        return atk*(multi/100)*(100/(100+r));
     }
     else
     {
-        return atk;
+        return atk*(100/(100+r));
     }
 }
 
@@ -61,7 +63,7 @@ int walka(struct postac P, struct postac W)
     int Atak;
     do
     {
-        Atak = atak(P.atk, P.cR, P.cDMG);
+        Atak = atak(P.atk, P.cR, P.cDMG, W.r);
         cout<<endl;
         if(Atak>P.atk)
         {
@@ -89,7 +91,7 @@ int walka(struct postac P, struct postac W)
             return 1;
             break;
         }
-        Atak = atak(W.atk, W.cR, W.cDMG);
+        Atak = atak(W.atk, W.cR, W.cDMG, P.r);
         if(Atak>W.atk)
         {
             cout<<"\n Wrog uderza ";
@@ -129,6 +131,7 @@ void resetP(struct postac* P)
     P->atk = r(25, 15);
     P->cR = r(1, 40);
     P->cDMG = r(101, 49);
+    P->r = r(1,15);
 }
 
 void lvlUP(struct postac* P, struct postac W, int l, int w)
@@ -185,7 +188,7 @@ void lvlUP(struct postac* P, struct postac W, int l, int w)
     }
 }
 
-void itemek(vector <itemy> A, struct postac* P, int n = r(1,5))
+void itemek(vector <itemy> A, struct postac* P, int n = r(0,5))
 {
     cout<<"\n Wylosowales item: "<<A[n].nazwa;
     if (A[n].hp>0)
@@ -256,11 +259,12 @@ int main()
         r(25, 15),
         r(1, 40),
         r(101, 49),
+        r(1,15),
     };
 
     vector <itemy> nrI =
     {
-        {0},
+        {0, "nic", 0, 0, 0, 0},
         {1, "helm", 0, 0, 0, 8},
         {2, "galoty", 25, 15, 2, 4},
         {3, "buty", 0, 0, 4, 0},
@@ -316,6 +320,7 @@ int main()
                 r(25*a, 15*a)+(1*(lvl-1)),
                 r(1, 40)+(0.5*(lvl-1)),
                 r(101, 49)+(0.6*(lvl-1)),
+                r(1*a,15*a),
             };
 
             cout<<"\n     LVL: "<<lvl;
