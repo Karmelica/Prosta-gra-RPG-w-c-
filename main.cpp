@@ -44,16 +44,16 @@ int r(int p, int k)
     return n;
 }
 
-double atak(double atk, double chance, double multi, double r)
+double atak(double atk, double chance, double multi, double re)
 {
     int szansa = r(1,100);
     if(chance>=szansa)
     {
-        return atk*(multi/100)*(100/(100+r));
+        return atk*(multi/100)*(100/(100+re));
     }
     else
     {
-        return atk*(100/(100+r));
+        return atk*(100/(100+re));
     }
 }
 
@@ -219,6 +219,7 @@ void pokaz(struct postac* A)
     cout<<"  ATK("<<A->atk<<")\n";
     cout<<"  CritRate("<<A->cR<<")%\n";
     cout<<"  CritDMG +("<<(((A->cDMG)/100)-1)*100<<")%ATK\n";
+    cout<<"  Resist("<<A->r<<")\n";
 }
 
 void pokazI(vector <itemy> A, int n)
@@ -320,7 +321,7 @@ int main()
                 r(25*a, 15*a)+(1*(lvl-1)),
                 r(1, 40)+(0.5*(lvl-1)),
                 r(101, 49)+(0.6*(lvl-1)),
-                r(1*a,15*a),
+                r(1*a, 15*a)+(1*(lvl-1)),
             };
 
             cout<<"\n     LVL: "<<lvl;
@@ -344,6 +345,8 @@ int main()
                 if(lvl%10==0){
                     itemek(nrI, &Gracz);
                 }
+                Gracz.r+=1;
+                cout<<"\n Resist ("<<(Gracz.r)-1<<" -> "<<Gracz.r<<")\n";
 
                 cout<<"\n Kliknij cokolwiek aby kontynuowac\n";
                 getch();
