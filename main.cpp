@@ -340,8 +340,8 @@ int main()
                     itemek(nrI, &Gracz);
                 }
 
-//                cout<<"\n Kliknij cokolwiek aby kontynuowac\n";
-//                getch();
+                cout<<"\n Kliknij cokolwiek aby kontynuowac\n";
+                getch();
                 lvl++;
             }
             else
