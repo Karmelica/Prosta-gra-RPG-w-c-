@@ -371,7 +371,7 @@ int main()
     while(wybor=='t');
     if (lvl==200)
     {
-        cout<<" !!WYGRALES!! ";
+        cout<<" !!LVL 200 WYGRALES AUUUU!! ";
     }
     else
     {
